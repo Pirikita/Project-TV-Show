@@ -22,12 +22,12 @@ function makePageForEpisodes(episodeList) {
   // find the root element in the HTML
   const rootElem = document.getElementById("root");
 
-  const episodesContainer = document.createElement("div");
+  const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
   rootElem.appendChild(searchBoxDiv);
   rootElem.appendChild(episodesContainer);
 
-  // clear anything that might already be in root
-  episodeDiv.innerHTML = "";
+  // clear anything that might already be in the episodes
+  episodesContainer.innerHTML = "";
 
   // go through each episode
   for (let i = 0; i < episodeList.length; i++) {
@@ -66,7 +66,7 @@ function makePageForEpisodes(episodeList) {
     episodeDiv.appendChild(summary);
 
     // add episode to the page
-    rootElem.appendChild(episodeDiv);
+    episodesContainer.appendChild(episodeDiv); // Added the episode card to the bigger container of episodes
   }
 
   const credit = document.createElement("p");
