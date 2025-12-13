@@ -24,6 +24,19 @@ function setup() {
   makePageForEpisodes(allEpisodes);
   searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`; // Displays the text even without something written in the search box
 
+  const credit = document.createElement("p"); // Moved from the below function
+  // so it doesn't recreate itself everytime the function runs
+
+  const link = document.createElement("a");
+  link.href = "https://www.tvmaze.com/";
+  link.target = "_blank";
+  link.textContent = "TVMaze.com";
+
+  credit.textContent = "Data originally from ";
+  credit.appendChild(link);
+
+  rootElem.appendChild(credit);
+
   searchBox.addEventListener("input", function () {
     // Making the search active
     const searchTerm = searchBox.value;
@@ -91,18 +104,6 @@ function makePageForEpisodes(episodeList) {
     // add episode to the page
     episodesContainer.appendChild(episodeDiv); // Added the episode card to the bigger container of episodes
   }
-
-  const credit = document.createElement("p");
-
-  const link = document.createElement("a");
-  link.href = "https://www.tvmaze.com/";
-  link.target = "_blank";
-  link.textContent = "TVMaze.com";
-
-  credit.textContent = "Data originally from ";
-  credit.appendChild(link);
-
-  rootElem.appendChild(credit);
 }
 // run setup when page finishes loading
 window.onload = setup;
