@@ -1,5 +1,5 @@
 //You can edit ALL of the code here
-let allEpisodes = [];
+let allEpisodes = []; // Empty array to fill with the retrieved data below
 
 const searchBoxDiv = document.createElement("div"); // Creates a card to include the search box and the text of episode display
 const searchBox = document.createElement("input"); // Created the box
@@ -10,8 +10,15 @@ searchText.textContent = "Displaying episodes x out of y"; // Will adjust the x 
 searchBoxDiv.appendChild(searchBox); // The big box will include the search box
 searchBoxDiv.appendChild(searchText); // and the text next to it
 
+const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
+
 // runs when the page loads
 function setup() {
+  // find the root element in the HTML
+  const rootElem = document.getElementById("root");
+  rootElem.appendChild(searchBoxDiv);
+  rootElem.appendChild(episodesContainer);
+
   // fill the empty array of line 2 with data
   allEpisodes = getAllEpisodes();
   // display them on the page
@@ -19,13 +26,6 @@ function setup() {
 }
 // shows the episodes on the page
 function makePageForEpisodes(episodeList) {
-  // find the root element in the HTML
-  const rootElem = document.getElementById("root");
-
-  const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
-  rootElem.appendChild(searchBoxDiv);
-  rootElem.appendChild(episodesContainer);
-
   // clear anything that might already be in the episodes
   episodesContainer.innerHTML = "";
 
