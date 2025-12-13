@@ -44,5 +44,5 @@ function makePageForEpisodes(episodeList) {
     rootElem.appendChild(episodeDiv);
   }
 }
-
+// run setup when page finishes loading 
 window.onload = setup;
