@@ -1,7 +1,8 @@
 //You can edit ALL of the code here
-const searchBox = document.createElement("input");
+const searchBox = document.createElement("input"); // Created
 searchBox.className = "input-box";
 searchBox.type = "input";
+rootElem.appendChild(searchBox);
 
 // runs when the page loads
 function setup() {
