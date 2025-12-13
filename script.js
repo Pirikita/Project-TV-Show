@@ -12,7 +12,7 @@ function makePageForEpisodes(episodeList) {
   // find the root element in the HTML
   const rootElem = document.getElementById("root");
   // ORIGINAL LINE OF CODE rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-  
+
   // clear anything that might already be in root
   rootElem.innerHTML = "";
 
@@ -22,7 +22,7 @@ function makePageForEpisodes(episodeList) {
 
     // container for each episode
     const episodeDiv = document.createElement("div");
-    
+
     let season = episode.season;
     let number = episode.number;
 
@@ -37,7 +37,7 @@ function makePageForEpisodes(episodeList) {
     const episodeCode = "S" + season + "E" + number;
     // show the episode title
     const title = document.createElement("h2");
-    title.textContent = episodeCode + "-" + episode.name;
+    title.textContent = episodeCode + " - " + episode.name; // Added a space before and after -
     episodeDiv.appendChild(title);
 
     // show episode image if it exists
@@ -48,7 +48,7 @@ function makePageForEpisodes(episodeList) {
       episodeDiv.appendChild(img);
     }
     //show the episode summary
-    const summary = document.createElement ("div");
+    const summary = document.createElement("div");
     summary.innerHTML = episode.summary || "No summary available";
     episodeDiv.appendChild(summary);
 
@@ -56,7 +56,7 @@ function makePageForEpisodes(episodeList) {
     rootElem.appendChild(episodeDiv);
   }
 
-    const credit = document.createElement("p");
+  const credit = document.createElement("p");
 
   const link = document.createElement("a");
   link.href = "https://www.tvmaze.com/";
@@ -68,5 +68,5 @@ function makePageForEpisodes(episodeList) {
 
   rootElem.appendChild(credit);
 }
-// run setup when page finishes loading 
+// run setup when page finishes loading
 window.onload = setup;
