@@ -18,6 +18,7 @@ function makePageForEpisodes(episodeList) {
 
   // clear anything that might already be in root
   rootElem.innerHTML = "";
+  rootElem.appendChild(searchBox); // Appended the searchBox before loading the episodes
 
   // go through each episode
   for (let i = 0; i < episodeList.length; i++) {
@@ -69,7 +70,6 @@ function makePageForEpisodes(episodeList) {
   credit.textContent = "Data originally from ";
   credit.appendChild(link);
 
-  rootElem.appendChild(searchBox); // Appended the searchBox
   rootElem.appendChild(credit);
 }
 // run setup when page finishes loading
