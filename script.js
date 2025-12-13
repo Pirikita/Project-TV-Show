@@ -22,6 +22,7 @@ function setup() {
   allEpisodes = getAllEpisodes();
   // display them on the page
   makePageForEpisodes(allEpisodes);
+  searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`;
 
   searchBox.addEventListener("input", function () {
     // Making the search active
