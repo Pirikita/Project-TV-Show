@@ -1,4 +1,4 @@
-#root {
+.episode {
   color: darkgreen; /* All letters */
   display: grid; /* Puts cards in a grid */
   grid-template-columns: repeat(
