@@ -33,6 +33,8 @@ function setup() {
   allEpisodes = getAllEpisodes();
   // display them on the page
   makePageForEpisodes(allEpisodes);
+  populateEpisodeSelector(allEpisodes);
+
   searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`; // Displays the text even without something written in the search box
 
   const credit = document.createElement("p"); // Moved from the below function
