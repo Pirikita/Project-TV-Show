@@ -1,7 +1,7 @@
 //You can edit ALL of the code here
 let allEpisodes = []; // Empty array to fill with the retrieved data below
 
-const searchBoxDiv = document.createElement("div"); // Creates a card to include the search box and the text of episode display
+const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
 const searchBox = document.createElement("input"); // Created the box
 searchBox.className = "input-box"; // Use it for styling after
 searchBox.type = "text";
@@ -10,8 +10,8 @@ searchBox.setAttribute("placeholder", "Search episodes..."); // Adding a text in
 
 const searchText = document.createElement("span"); // Text that will appear next to the box
 searchText.className = "search-text";
-searchBoxDiv.appendChild(searchBox); // The big box will include the search box
-searchBoxDiv.appendChild(searchText); // and the text next to it
+navigationDiv.appendChild(searchBox); // The big box will include the search box
+navigationDiv.appendChild(searchText); // the text next to it
 
 const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
 // Added all big containers axcept rootElem in the global scope. They will be executed before the setup on loading
@@ -20,7 +20,7 @@ episodesContainer.className = "episodes-container";
 function setup() {
   // find the root element in the HTML
   const rootElem = document.getElementById("root");
-  rootElem.appendChild(searchBoxDiv); // Created the structure of the root by appending the searchBoxDiv and
+  rootElem.appendChild(navigationDiv); // Created the structure of the root by appending the searchBoxDiv and
   rootElem.appendChild(episodesContainer); // the episodes container
 
   // fill the empty array of line 2 with data
