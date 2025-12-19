@@ -1,16 +1,19 @@
 //You can edit ALL of the code here
+const statusMessage = document.createElement("p");
+statusMessage.className = "status-message";
+
 let allEpisodes = []; // Empty array to fill with the retrieved data below
 
 const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
 navigationDiv.className = "navigationDiv";
 
-const episodeSelector = document.createElement("select"); // Cretaes the dropdown menu
+const episodeSelector = document.createElement("select"); // Cretes the dropdown menu
 episodeSelector.className = "episode-selector"; // Use it for styling after
 
 const searchBox = document.createElement("input"); // Created the box
 searchBox.className = "input-box"; // Use it for styling after
 searchBox.type = "text";
-searchBox.setAttribute("aria-label", "Search episodes"); // For better lighthouse accesibility
+searchBox.setAttribute("aria-label", "Search episodes"); // For better lighthouse accessibility
 searchBox.setAttribute("placeholder", "Search episodes..."); // Adding a text in the search box
 
 const searchText = document.createElement("span"); // Text that will appear next to the box
@@ -21,25 +24,24 @@ navigationDiv.appendChild(searchBox); //  the search box
 navigationDiv.appendChild(searchText); // and the text next to it
 
 const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
-// Added all big containers axcept rootElem in the global scope. They will be executed before the setup on loading
+// Added all big containers except rootElem in the global scope. They will be executed before the setup on loading
 episodesContainer.className = "episodes-container";
 
 function setup() {
+  statusMessage.textContent = "Loading episodes...";
+  document.getElementById("root").appendChild(statusMessage);
   // find the root element in the HTML
   const rootElem = document.getElementById("root");
   rootElem.appendChild(navigationDiv); // Created the structure of the root by appending the searchBoxDiv and
   rootElem.appendChild(episodesContainer); // the episodes container
 
-  // fill the empty array of line 2 with data
-  allEpisodes = getAllEpisodes();
-  // display them on the page
-  makePageForEpisodes(allEpisodes);
-  populateEpisodeSelector(allEpisodes);
+ // get episodes from API
+  fetchEpisodes();
 
   searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`; // Displays the text even without something written in the search box
 
   const credit = document.createElement("p"); // Moved from the below function
-  // so it doesn't recreate itself everytime the function runs
+  // so it doesn't recreate itself every time the function runs
 
   const link = document.createElement("a");
   link.href = "https://www.tvmaze.com/";
@@ -62,7 +64,9 @@ function setup() {
       const searchTermLower = searchTerm.toLowerCase(); // turns all the input to lower case for better comparison
       const filteredEpisodes = allEpisodes.filter(function (episode) {
         const name = episode.name.toLowerCase();
-        const summary = episode.summary.toLowerCase();
+        const summary = episode.summary
+        ? episode.summary.toLowerCase()
+        : "";
         return (
           name.includes(searchTermLower) || summary.includes(searchTermLower)
         );
@@ -159,6 +163,30 @@ function populateEpisodeSelector(episodeList) {
 
     episodeSelector.appendChild(option); // Append the options to the episodeSelector box
   }
+}
+
+function fetchEpisodes() {
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+  .then(function (response) {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then(function (data) {
+    allEpisodes = data;
+
+    statusMessage.remove(); // remove loading message
+
+    makePageForEpisodes(allEpisodes);
+    populateEpisodeSelector(allEpisodes);
+
+    searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`;
+  })
+  .catch(function (error) {
+    statusMessage.textContent =
+    "Sorry, something went wrong while loading the episodes.";
+  });
 }
 // run setup when page finishes loading
 window.onload = setup;
