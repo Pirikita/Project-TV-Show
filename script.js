@@ -1,4 +1,6 @@
 //You can edit ALL of the code here
+
+
 const statusMessage = document.createElement("p");
 statusMessage.className = "status-message";
 
@@ -9,8 +11,8 @@ navigationDiv.className = "navigationDiv";
 
 const episodeSelector = document.createElement("select"); // Cretes the dropdown menu
 episodeSelector.className = "episode-selector"; // Use it for styling after
-episodeSelector.setAttribute(
-  "arial-label",
+episodeSelector.setAttribute( // added label for better accessibility
+  "aria-label",
   "Select an episode to jump to"
 );
 
