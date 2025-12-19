@@ -1,7 +1,12 @@
 //You can edit ALL of the code here
 let allEpisodes = []; // Empty array to fill with the retrieved data below
 
-const searchBoxDiv = document.createElement("div"); // Creates a card to include the search box and the text of episode display
+const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
+navigationDiv.className = "navigationDiv";
+
+const episodeSelector = document.createElement("select"); // Cretaes the dropdown menu
+episodeSelector.className = "episode-selector"; // Use it for styling after
+
 const searchBox = document.createElement("input"); // Created the box
 searchBox.className = "input-box"; // Use it for styling after
 searchBox.type = "text";
@@ -10,8 +15,10 @@ searchBox.setAttribute("placeholder", "Search episodes..."); // Adding a text in
 
 const searchText = document.createElement("span"); // Text that will appear next to the box
 searchText.className = "search-text";
-searchBoxDiv.appendChild(searchBox); // The big box will include the search box
-searchBoxDiv.appendChild(searchText); // and the text next to it
+
+navigationDiv.appendChild(episodeSelector); // The big box will include the episode selector
+navigationDiv.appendChild(searchBox); //  the search box
+navigationDiv.appendChild(searchText); // and the text next to it
 
 const episodesContainer = document.createElement("div"); // Creates a big container to put all the episodes div inside
 // Added all big containers axcept rootElem in the global scope. They will be executed before the setup on loading
@@ -20,13 +27,15 @@ episodesContainer.className = "episodes-container";
 function setup() {
   // find the root element in the HTML
   const rootElem = document.getElementById("root");
-  rootElem.appendChild(searchBoxDiv); // Created the structure of the root by appending the searchBoxDiv and
+  rootElem.appendChild(navigationDiv); // Created the structure of the root by appending the searchBoxDiv and
   rootElem.appendChild(episodesContainer); // the episodes container
 
   // fill the empty array of line 2 with data
   allEpisodes = getAllEpisodes();
   // display them on the page
   makePageForEpisodes(allEpisodes);
+  populateEpisodeSelector(allEpisodes);
+
   searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`; // Displays the text even without something written in the search box
 
   const credit = document.createElement("p"); // Moved from the below function
@@ -62,6 +71,17 @@ function setup() {
       searchText.textContent = `Displaying episodes ${filteredEpisodes.length} out of ${allEpisodes.length}`;
     }
   });
+
+  episodeSelector.addEventListener("change", function () {
+    const selectedCode = episodeSelector.value; // S01E01 for example
+    const targetId = "episode-" + selectedCode; // FOrmat to match the id of the episode card
+    const targetElement = document.getElementById(targetId); // The episode card
+
+    if (targetElement) {
+      // If the card exists
+      targetElement.scrollIntoView({ behavior: "smooth" }); // "Jump" to it
+    }
+  });
 }
 // shows the episodes on the page
 function makePageForEpisodes(episodeList) {
@@ -90,6 +110,7 @@ function makePageForEpisodes(episodeList) {
     }
 
     const episodeCode = "S" + season + "E" + number;
+    episodeDiv.id = "episode-" + episodeCode;
     // show the episode title
     const title = document.createElement("h2");
     title.textContent = episodeCode + " - " + episode.name; // Added a space before and after -
@@ -110,6 +131,33 @@ function makePageForEpisodes(episodeList) {
 
     // add episode to the page
     episodesContainer.appendChild(episodeDiv); // Added the episode card to the bigger container of episodes
+  }
+}
+
+function populateEpisodeSelector(episodeList) {
+  // Fill episode selector with titles of episodes to choose from
+  for (let i = 0; i < episodeList.length; i++) {
+    // Loop through episodes
+    const episode = episodeList[i]; // for each episode
+
+    let season = episode.season; // Copied code from above to create the episodeCode
+    let number = episode.number;
+
+    // adding 0's if needed
+    if (season < 10) {
+      season = "0" + season;
+    }
+    if (number < 10) {
+      number = "0" + number;
+    }
+
+    const episodeCode = "S" + season + "E" + number;
+
+    const option = document.createElement("option"); // Created an element for all options in the dropdown menu
+    option.textContent = episodeCode + " - " + episode.name;
+    option.value = episodeCode; // for better matching with the card after
+
+    episodeSelector.appendChild(option); // Append the options to the episodeSelector box
   }
 }
 // run setup when page finishes loading
