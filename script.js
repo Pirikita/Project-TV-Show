@@ -9,6 +9,10 @@ navigationDiv.className = "navigationDiv";
 
 const episodeSelector = document.createElement("select"); // Cretes the dropdown menu
 episodeSelector.className = "episode-selector"; // Use it for styling after
+episodeSelector.setAttribute(
+  "arial-label",
+  "Select an episode to jump to"
+);
 
 const searchBox = document.createElement("input"); // Created the box
 searchBox.className = "input-box"; // Use it for styling after
@@ -126,6 +130,8 @@ function makePageForEpisodes(episodeList) {
       img.className = "episode-img";
       img.src = episode.image.medium.replace("http://", "https://"); // Forced https for better score in lighthouse
       img.alt = episode.name + "image";
+      img.width = 210;
+      img.height = 295;
       episodeDiv.appendChild(img);
     }
     //show the episode summary
