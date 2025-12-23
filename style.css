@@ -57,6 +57,7 @@ body {
   border: 4px; /* size of the outline of the box */
   padding: 15px; /* padding inside the card, pushes internal elements to the center */
   background-color: black; /* color of the card */
+  text-align: center;
 }
 
 .episode-img {
