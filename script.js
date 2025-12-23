@@ -9,7 +9,7 @@ let allEpisodes = []; // Empty array to fill with the retrieved data below
 const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
 navigationDiv.className = "navigationDiv";
 
-const episodeSelector = document.createElement("select"); // Cretes the dropdown menu
+const episodeSelector = document.createElement("select"); // Creates the dropdown menu
 episodeSelector.className = "episode-selector"; // Use it for styling after
 episodeSelector.setAttribute( // added label for better accessibility
   "aria-label",
