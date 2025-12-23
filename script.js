@@ -1,5 +1,5 @@
 //You can edit ALL of the code here
-
+  const rootElem = document.getElementById("root");
 
 const statusMessage = document.createElement("p");
 statusMessage.className = "status-message";
@@ -35,9 +35,9 @@ episodesContainer.className = "episodes-container";
 
 function setup() {
   statusMessage.textContent = "Loading episodes...";
-  document.getElementById("root").appendChild(statusMessage);
+ // document.getElementById("root").appendChild(statusMessage);
   // find the root element in the HTML
-  const rootElem = document.getElementById("root");
+  // const rootElem = document.getElementById("root");
   rootElem.appendChild(navigationDiv); // Created the structure of the root by appending the searchBoxDiv and
   rootElem.appendChild(episodesContainer); // the episodes container
 
@@ -95,7 +95,7 @@ function setup() {
 }
 // shows the episodes on the page
 function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root"); // define it again
+  //const rootElem = document.getElementById("root"); // define it again
 
   // clear anything that might already be in the episodes
   episodesContainer.innerHTML = "";
