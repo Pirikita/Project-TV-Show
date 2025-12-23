@@ -1,5 +1,5 @@
 //You can edit ALL of the code here
-  const rootElem = document.getElementById("root");
+const rootElem = document.getElementById("root");
 
 const statusMessage = document.createElement("p");
 statusMessage.className = "status-message";
@@ -102,7 +102,7 @@ function formatEpisodeCode(season, number) {
 
 // shows the episodes on the page
 function makePageForEpisodes(episodeList) {
-  //const rootElem = document.getElementById("root"); // define it again
+rootElem.appendChild(statusMessage);
 
   // clear anything that might already be in the episodes
   episodesContainer.innerHTML = "";
@@ -115,19 +115,11 @@ function makePageForEpisodes(episodeList) {
     const episodeDiv = document.createElement("div");
     episodeDiv.className = "episode-card";
 
-    let season = episode.season;
-    let number = episode.number;
-
-    /* adding 0's if needed
-    if (season < 10) {
-      season = "0" + season;
-    }
-    if (number < 10) {
-      number = "0" + number;
-    }*/
+const episodeCode = formatEpisodeCode(episode.season, episode.number);
+episodeDiv.id ="episode-" + episodeCode;
 
         //const episodeCode = "S" + season + "E" + number;
-        //episodeDiv.id = "episode-" + episodeCode;
+        // episodeDiv.id = "episode-" + episodeCode;
     // show the episode title
     const title = document.createElement("h2");
     title.textContent = episodeCode + " - " + episode.name; // Added a space before and after -
@@ -159,18 +151,7 @@ function populateEpisodeSelector(episodeList) {
     // Loop through episodes
     const episode = episodeList[i]; // for each episode
 
-    let season = episode.season; // Copied code from above to create the episodeCode
-    let number = episode.number;
-
-    /* adding 0's if needed
-    if (season < 10) {
-      season = "0" + season;
-    }
-    if (number < 10) {
-      number = "0" + number;
-    }*/
-
-    const episodeCode = formatEpisodeCode(episode.code, episode.number);
+    const episodeCode = formatEpisodeCode(episode.season, episode.number);
 
     const option = document.createElement("option"); // Created an element for all options in the dropdown menu
     option.textContent = episodeCode + " - " + episode.name;
