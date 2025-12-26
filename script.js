@@ -7,6 +7,8 @@ statusMessage.className = "status-message";
 let allShows = []; //Empty array to fill with retrieved data of shows below
 let allEpisodes = []; // Empty array to fill with the retrieved data below
 
+const episodeCache = {}; // Empty object to store the shows episodes
+
 const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
 navigationDiv.className = "navigationDiv";
 
@@ -223,25 +225,36 @@ function populateShowSelector(showList) {
   }
 }
 
-function fetchEpisodes() {
-  fetch("https://api.tvmaze.com/shows/82/episodes")
+function fetchEpisodesForShow(showId) {
+  if (episodeCache[showId]) {
+    allEpisodes = episodeCache[showId];
+    makePageForEpisodes(allEpisodes);
+    populateEpisodeSelector(allEpisodes);
+    searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length}.`;
+    return;
+  }
+
+  statusMessage.textContent = "Loading episodes...";
+  rootElem.appendChild(statusMessage);
+
+  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
     .then(function (response) {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Network responce was not ok");
       }
-      return response.json();
+      return response.json;
     })
     .then(function (data) {
+      episodeCache[showId] = data; // Adding data to the cache
       allEpisodes = data;
 
-      statusMessage.remove(); // remove loading message
+      statusMessage.remove();
 
       makePageForEpisodes(allEpisodes);
       populateEpisodeSelector(allEpisodes);
-
-      searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`;
+      searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length}.`;
     })
-    .catch(function (error) {
+    .catch(function () {
       statusMessage.textContent =
         "Sorry, something went wrong while loading the episodes.";
     });
