@@ -238,6 +238,9 @@ function populateShowSelector(showList) {
     option.value = show.id;
     showSelector.appendChild(option);
   }
+
+  showSelector.value = showList[0].id; // Shows the first shows when page loads
+  fetchEpisodesForShow(showList[0].id);
 }
 
 function fetchEpisodesForShow(showId) {
