@@ -91,7 +91,15 @@ function setup() {
 
   showSelector.addEventListener("change", function () {
     const selectedShowId = showSelector.value;
-    console.log("Selected show id:", selectedShowId);
+
+    if (!selectedShowId) {
+      episodesContainer.innerHTML = "";
+      searchText.textContent = "";
+      return;
+    }
+
+    searchBox.value = "";
+    fetchEpisodesForShow(selectedShowId);
   });
 
   episodeSelector.addEventListener("change", function () {
