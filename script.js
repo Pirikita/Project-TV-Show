@@ -87,6 +87,11 @@ function setup() {
     }
   });
 
+  showSelector.addEventListener("change", function () {
+    const selectedShowId = showSelector.value;
+    console.log("Selected show id:", selectedShowId);
+  });
+
   episodeSelector.addEventListener("change", function () {
     const selectedCode = episodeSelector.value; // S01E01 for example
     const targetId = "episode-" + selectedCode; // FOrmat to match the id of the episode card
