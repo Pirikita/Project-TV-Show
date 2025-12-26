@@ -200,6 +200,24 @@ function fetchShows() {
     });
 }
 
+function populateShowSelector(showList) {
+  // To add the shows in the selector
+  showSelector.innerHTML = "";
+
+  const placeholder = document.createElement("option");
+  placeholder.textContent = "Select a show...";
+  placeholder.value = "";
+  showSelector.appendChild(placeholder);
+
+  for (let i = 0; i < showList.length; i++) {
+    const show = showList[i];
+    const option = document.createElement("option");
+    option.textContent = show.name;
+    option.value = show.id;
+    showSelector.appendChild(option);
+  }
+}
+
 function fetchEpisodes() {
   fetch("https://api.tvmaze.com/shows/82/episodes")
     .then(function (response) {
