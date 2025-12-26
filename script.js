@@ -4,6 +4,7 @@ const rootElem = document.getElementById("root");
 const statusMessage = document.createElement("p");
 statusMessage.className = "status-message";
 
+let allShows = []; //Empty array to fill with retrieved data of shows below
 let allEpisodes = []; // Empty array to fill with the retrieved data below
 
 const navigationDiv = document.createElement("div"); // Altered to create a card to include the episodes menu, search box and the text of episode display
@@ -47,8 +48,8 @@ function setup() {
   rootElem.appendChild(navigationDiv); // Created the structure of the root by appending the searchBoxDiv and
   rootElem.appendChild(episodesContainer); // the episodes container
 
-  // get episodes from API
-  fetchEpisodes();
+  // get all shows from API
+  fetchShows();
 
   searchText.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`; // Displays the text even without something written in the search box
 
@@ -163,6 +164,40 @@ function populateEpisodeSelector(episodeList) {
 
     episodeSelector.appendChild(option); // Append the options to the episodeSelector box
   }
+}
+
+function fetchShows() {
+  statusMessage.textContent = "Loading shows...";
+  rootElem.appendChild(statusMessage);
+
+  fetch("https://api.tvmaze.com/shows")
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      allShows = data;
+      statusMessage.remove();
+
+      allShows.sort(function (a, b) {
+        // Sorts shows alphabetically and case sensitive
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+      });
+
+      populateShowSelector(allShows);
+    })
+
+    .catch(function (error) {
+      statusMessage.textContent =
+        "Sorry, something went wrong while loading the shows.";
+      console.error(error);
+    });
 }
 
 function fetchEpisodes() {
